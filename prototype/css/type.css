@@ -1,0 +1,50 @@
+/* Three type pairings, switchable from the options tray.
+   Each sets the three role faces plus the small optical corrections
+   that keep the scale looking even across very different families. */
+
+/* ── A · Cartographic ──────────────────────────────────────────────────
+   Condensed grotesque for titling, drawn from map-sheet and survey
+   labelling, over an on-screen news serif. Inverts the expected
+   serif-display / sans-body arrangement. */
+[data-type="a"] {
+  --f-title: 'Archivo Narrow', 'Arial Narrow', system-ui, sans-serif;
+  --f-read:  'Newsreader', Georgia, serif;
+  --f-data:  'IBM Plex Mono', ui-monospace, monospace;
+  --title-track: -.01em;
+  --title-weight: 700;
+  --read-size: 1em;
+}
+
+/* ── B · Editorial ─────────────────────────────────────────────────────
+   A characterful variable serif for titling against a serif designed
+   for long-form screen reading. Warmer, more publication than tool. */
+[data-type="b"] {
+  --f-title: 'Fraunces', Georgia, serif;
+  --f-read:  'Literata', Georgia, serif;
+  --f-data:  'IBM Plex Mono', ui-monospace, monospace;
+  --title-track: -.018em;
+  --title-weight: 600;
+  --read-size: .96em;
+}
+[data-type="b"] .panel-title,
+[data-type="b"] .dossier-title,
+[data-type="b"] .drawer-title {
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 90;
+}
+
+/* ── C · Technical ─────────────────────────────────────────────────────
+   One grotesque doing both titling and reading, with mono for data.
+   Reads as an instrument rather than a publication. */
+[data-type="c"] {
+  --f-title: 'Chivo', system-ui, sans-serif;
+  --f-read:  'Chivo', system-ui, sans-serif;
+  --f-data:  'IBM Plex Mono', ui-monospace, monospace;
+  --title-track: -.015em;
+  --title-weight: 700;
+  --read-size: .94em;
+}
+/* a sans body needs tighter leading than a serif one */
+[data-type="c"] body,
+[data-type="c"] .summary,
+[data-type="c"] .frame-text,
+[data-type="c"] .art-h { line-height: 1.45; }

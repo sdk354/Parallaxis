@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-type="b" data-density="compact">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallaxis — prototype</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/type.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<nav class="rail" aria-label="Sections">
+  <div class="rail-mark" title="Parallaxis">P</div>
+
+  <button class="rail-btn" aria-current="page" title="Map" aria-label="Map">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/>
+    </svg>
+  </button>
+  <button class="rail-btn is-stub" title="Rhetoric analyser — not built yet" aria-label="Rhetoric analyser, not built yet">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14M5 9h14M5 14h9M5 19h5"/></svg>
+  </button>
+  <button class="rail-btn is-stub" title="Verification — not built yet" aria-label="Verification, not built yet">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+  </button>
+  <button class="rail-btn is-stub" title="Trackers — not built yet" aria-label="Trackers, not built yet">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M2 21h20"/></svg>
+  </button>
+
+  <div class="rail-spacer"></div>
+
+  <button class="rail-btn" id="open-lab" aria-expanded="false"
+          title="Design lab — compare and score options" aria-label="Design lab">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3v6L3 20h18L18 9V3M6 3h12M9 3v5M15 3v5M4.5 15h15"/>
+    </svg>
+  </button>
+</nav>
+
+<div class="stage" id="stage">
+  <svg id="map" role="application"
+       aria-label="World map of tracked geopolitical events. Tab moves between events, Enter opens one, Escape closes."></svg>
+
+  <!-- top-left: what am I comparing -->
+  <div class="hud hud-tl">
+    <div class="hud-row">
+      <div class="seg" id="mode" role="group" aria-label="Map mode">
+        <button data-mode="single" aria-pressed="false">One</button>
+        <button data-mode="compare" aria-pressed="true">Compare</button>
+      </div>
+      <span class="hud-label" id="persp-label">Comparing</span>
+      <button class="persp-summary" id="persp-summary" aria-expanded="false">
+        <span id="persp-text">Western vs Russian</span><span class="caret">▼</span>
+      </button>
+    </div>
+    <div class="persp-list" id="persp-list"></div>
+  </div>
+
+  <!-- top-right: actions -->
+  <div class="hud hud-tr">
+    <button class="hud-btn" id="blind-only" aria-pressed="false">Blindspots</button>
+    <button class="hud-btn" id="toggle-labels" aria-pressed="true">Labels</button>
+    <button class="hud-btn" id="toggle-disputed" aria-pressed="true">Disputed</button>
+    <button class="hud-btn" id="reset-view">World view</button>
+    <button class="hud-btn" id="toggle-display" aria-expanded="false">Display</button>
+    <button class="hud-btn" id="toggle-events" aria-pressed="false">Events</button>
+  </div>
+
+  <div class="hud hud-display" id="display-panel" hidden>
+    <div class="hud-row">
+      <span class="hud-label">Theme</span>
+      <div class="seg" id="pick-theme" role="group" aria-label="Map theme"></div>
+    </div>
+    <div class="hud-row">
+      <span class="hud-label">Type</span>
+      <div class="seg" id="pick-type" role="group" aria-label="Type pairing"></div>
+    </div>
+    <div class="hud-row">
+      <span class="hud-label">Density</span>
+      <div class="seg" id="pick-density" role="group" aria-label="Density"></div>
+    </div>
+  </div>
+
+  <!-- bottom-left: legend, collapsed by default -->
+  <div class="hud hud-bl">
+    <div class="legend-line">
+      <span>severity</span>
+      <span class="sev-ramp" id="sev-ramp" aria-hidden="true"></span>
+      <span>1 → 5</span>
+      <b id="status"></b>
+      <button class="hud-btn" id="legend-toggle" aria-expanded="true"
+              style="padding:3px 8px">Hide key</button>
+    </div>
+    <div class="legend-more open" id="legend-more">
+      <figure class="legend-ex" id="legend-example"></figure>
+    </div>
+  </div>
+
+  <div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+
+  <!-- event drawer -->
+  <aside class="drawer" id="drawer" aria-label="Event detail" aria-hidden="true">
+    <div class="drawer-head" id="drawer-head"></div>
+    <div class="drawer-body" id="drawer-body"></div>
+  </aside>
+
+  <!-- design lab -->
+  <aside class="lab" id="lab" aria-label="Design lab" aria-hidden="true">
+    <div class="lab-head">
+      <h2>Design lab</h2>
+      <button class="icon-btn" id="lab-close" aria-label="Close design lab">✕</button>
+    </div>
+    <div class="lab-body"></div>
+    <div class="lab-foot">
+      <div class="round-nav" role="group" aria-label="Round">
+        <button class="lab-btn step" data-act="prev-round" aria-label="Previous round">‹</button>
+        <span class="lab-count"></span>
+        <button class="lab-btn step" data-act="next-round" aria-label="Next round">›</button>
+      </div>
+      <span class="spacer"></span>
+      <button class="lab-btn" data-act="new-round">+ Round</button>
+      <button class="lab-btn" data-act="download">JSON</button>
+      <button class="lab-btn primary" data-act="copy">Copy</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="js/geo.js"></script>
+<script src="js/labels.js"></script>
+<script src="js/disputed.js"></script>
+<script src="js/data.js"></script>
+<script src="js/map-treatments.js"></script>
+<script src="js/lab-rounds.js"></script>
+<script src="js/lab.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* Design tokens — the machine-readable half of ui-design.md.
+   Map colours are NOT here; they live in js/map-treatments.js and are
+   written onto the document as custom properties at runtime. */
+
+:root {
+  /* ── Severity. Overwritten per map treatment, because the ramp is not
+        ground-agnostic — sand vanishes on pale land. ─────────────────── */
+  --sev-1: #F5DCB6;
+  --sev-2: #E9AE6C;
+  --sev-3: #DA7C3C;
+  --sev-4: #C04A24;
+  --sev-5: #8E2A15;
+
+  /* ── Document surface: reading. Follows theme. ─────────────────────── */
+  --doc-bg:        #FBFCFD;
+  --doc-sunk:      #EFF2F5;
+  --doc-rule:      #D8DFE6;
+  --doc-rule-soft: #E7ECF1;
+  --ink:       #101922;
+  --ink-muted: #55616E;
+  --ink-faint: #87929E;
+
+  /* ── Accent: selection, measurement, controls. ─────────────────────── */
+  --sight:      #21707F;
+  --sight-soft: #DBEBEE;
+  --sight-hi:   #4FB3C7;
+
+  /* ── Chrome floating over the map. Set per treatment ground. ───────── */
+  --hud-bg:     rgba(10, 16, 23, .82);
+  --hud-rule:   rgba(255, 255, 255, .14);
+  --hud-ink:    #EDF2F6;
+  --hud-muted:  #9AA9B7;
+  --hud-hover:  rgba(255, 255, 255, .07);
+
+  /* ── Type. Faces come from type.css. ──────────────────────────────── */
+  --title-track: -.01em;
+  --title-weight: 700;
+  --read-size: 1em;
+
+  --t-xs:   11px;
+  --t-sm:   13px;
+  --t-base: 15px;
+  --t-md:   17px;
+  --t-lg:   21px;
+  --t-xl:   28px;
+
+  /* ── Space (comfortable) ──────────────────────────────────────────── */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 22px; --s-6: 30px; --s-7: 42px;
+
+  /* lat/long lines were removed in round 3; re-adding them needs a
+     --map-grat token and a graticule group in buildMap. */
+  --rail-w:   58px;
+  --drawer-w: 430px;
+  --radius: 3px;
+}
+
+/* Compact density: tighter rhythm and a step down in type. */
+[data-density="compact"] {
+  --t-xs:   10px;
+  --t-sm:   12px;
+  --t-base: 13.5px;
+  --t-md:   15px;
+  --t-lg:   18px;
+  --t-xl:   23px;
+
+  --s-1: 3px;  --s-2: 6px;  --s-3: 9px;  --s-4: 12px;
+  --s-5: 16px; --s-6: 22px; --s-7: 30px;
+
+  --rail-w:   50px;
+  --drawer-w: 380px;
+}
+
+/* Chrome over a light map treatment. */
+[data-ground="light"] {
+  --hud-bg:    rgba(255, 255, 255, .88);
+  --hud-rule:  rgba(0, 0, 0, .16);
+  --hud-ink:   #16212B;
+  --hud-muted: #5B6975;
+  --hud-hover: rgba(0, 0, 0, .05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --doc-bg:        #141C24;
+    --doc-sunk:      #0F161D;
+    --doc-rule:      #2B3945;
+    --doc-rule-soft: #202C37;
+    --ink:       #E9EEF3;
+    --ink-muted: #97A5B3;
+    --ink-faint: #6E7C89;
+    --sight:      #4FB3C7;
+    --sight-soft: #16323C;
+  }
+}
+:root[data-theme="dark"] {
+  --doc-bg:        #141C24;
+  --doc-sunk:      #0F161D;
+  --doc-rule:      #2B3945;
+  --doc-rule-soft: #202C37;
+  --ink:       #E9EEF3;
+  --ink-muted: #97A5B3;
+  --ink-faint: #6E7C89;
+  --sight:      #4FB3C7;
+  --sight-soft: #16323C;
+}
